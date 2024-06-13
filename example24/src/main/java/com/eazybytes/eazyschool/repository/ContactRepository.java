@@ -26,7 +26,7 @@ public class ContactRepository {
 
     }
 
-    public List<Contact> findMsgsWithStatus(String status) {
+    public List<Contact> findMsgWithStatus(String status) {
         String sql = "SELECT * FROM CONTACT_MSG WHERE STATUS = ?";
         return jdbcTemplate.query(sql,new PreparedStatementSetter() {
             public void setValues(PreparedStatement preparedStatement) throws SQLException {

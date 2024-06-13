@@ -14,6 +14,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
 import java.util.logging.Logger;
 @Slf4j
 @Controller
@@ -47,8 +48,15 @@ public class ContactController {
             return "contact.html";
         }
         contactService.saveMessageDetails(contact);
-        contactService.setCounter(contactService.getCounter()+1);
-        log.info("Number of times contact submitted : "+contactService.getCounter());
+//        contactService.setCounter(contactService.getCounter()+1);
+//        log.info("Number of times contact submitted : "+contactService.getCounter());
         return "redirect:/contact";
+    }
+    @RequestMapping("/displayMessages")
+    public ModelAndView displayMessages(Model model) {
+        List<Contact> contactMsgs = contactService.findMsgWithOpenStatus();
+        ModelAndView modelAndView = new ModelAndView("messages.html");
+        modelAndView.addObject("contactMsgs", contactMsgs);
+        return modelAndView;
     }
 }

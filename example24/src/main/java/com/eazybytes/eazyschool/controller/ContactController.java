@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import lombok.extern.slf4j.XSlf4j;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -58,5 +59,10 @@ public class ContactController {
         ModelAndView modelAndView = new ModelAndView("messages.html");
         modelAndView.addObject("contactMsgs", contactMsgs);
         return modelAndView;
+    }
+    @RequestMapping(value = "/closeMsg",method = RequestMethod.GET)
+    public String CloseMsg(@RequestParam int id){
+        contactService.updateMsgStatus(id);
+        return "redirect:/displayMessages";
     }
 }

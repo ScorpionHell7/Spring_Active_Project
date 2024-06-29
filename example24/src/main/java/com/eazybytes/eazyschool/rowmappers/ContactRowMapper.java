@@ -2,8 +2,11 @@ package com.eazybytes.eazyschool.rowmappers;
 
 import com.eazybytes.eazyschool.model.Contact;
 
-import javax.swing.tree.RowMapper;
+//import javax.swing.tree.RowMapper;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import org.springframework.jdbc.core.RowMapper;
 
 public class ContactRowMapper implements RowMapper<Contact> {
     @Override
@@ -16,11 +19,11 @@ public class ContactRowMapper implements RowMapper<Contact> {
         contact.setSubject(rs.getString("SUBJECT"));
         contact.setMessage(rs.getString("MESSAGE"));
         contact.setStatus(rs.getString("STATUS"));
-        contact.setCreatedAt(rs.getString("CREATED_AT"));
+        contact.setCreatedAt(rs.getTimestamp("CREATED_AT").toLocalDateTime());
         contact.setCreatedBy(rs.getString("CREATED_BY"));
 
         if(null!=rs.getTimestamp("UPDATED_AT")){
-            contact.setUpdatedAt(rs.getString("UPDATED_AT").toLocalDateTime());
+            contact.setUpdatedAt(rs.getTimestamp("UPDATED_AT").toLocalDateTime());
         }
         contact.setUpdatedBy(rs.getString("UPDATED_BY"));
         return contact;
